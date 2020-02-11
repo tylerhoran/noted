@@ -5,6 +5,6 @@ class ProcessEntities
     note = Note.find(note_id)
     comprehend = Aws::Comprehend::Client.new
     response = comprehend.detect_entities({text: note.text, language_code: 'en'})
-    note.update(entities: response.to_hash
+    note.update(entities: response.to_hash)
   end
 end
