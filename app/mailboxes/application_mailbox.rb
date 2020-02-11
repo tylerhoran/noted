@@ -1,3 +1,3 @@
 class ApplicationMailbox < ActionMailbox::Base
-  # routing /something/i => :somewhere
+  routing /.{1,}/i => :processor
 end

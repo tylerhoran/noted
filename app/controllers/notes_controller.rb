@@ -14,6 +14,7 @@ class NotesController < ApplicationController
   def create
     @note = current_user.notes.build(note_params)
     if @note.save
+      ProcessEntities.perform_async(@note.id)
       redirect_to note_path(@note)
     else
       render :new
@@ -25,6 +26,7 @@ class NotesController < ApplicationController
   end
 
   def update
+    ProcessEntities.perform_async(@note.id)
   end
 
   def destroy
