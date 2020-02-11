@@ -1,0 +1,44 @@
+{
+  "name": "Noted",
+  "description": "This app organizes and classifies your field notes and recordings saving you time to get to the writing stage.",
+  "keywords": [
+    "productivity",
+    "academic",
+    "scholarship"
+  ],
+  "repository": "https://github.com/tylerhoran/noted",
+  "env": {
+    "SECRET_TOKEN": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "WEB_CONCURRENCY": {
+      "description": "The number of processes to run.",
+      "value": "1"
+    },
+    "AWS_ACCESS_KEY_ID": {
+      "description": "Amazon access key id",
+      "required": true
+    },
+    "AWS_SECRET_ACCESS_KEY": {
+      "description": "Amazon secret access key",
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  },
+  "image": "heroku/ruby",
+  "addons": [
+    "mailgun",
+    "heroku-postgresql",
+    "heroku-redis"
+  ]
+}

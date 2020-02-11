@@ -1,0 +1,23 @@
+.float-right
+  = search_form_for @q, class: 'form-inline' do |f|
+    = f.search_field :text_or_entities_cont, class: 'form-control mr-3', placeholder: 'Full Text'
+    = f.facet_for :folder_name
+    = f.submit "Search", class: 'btn btn-dark'
+= content_tag :table do
+  = content_tag :th, "Sort by:"
+  = content_tag :th, sort_link(@q, :created_at)
+  = content_tag :th, sort_link(@q, :folder_name, "Folder")
+%table.table.mt-5
+  %thead
+    %tr
+      %td Folder
+      %td Created At
+      %td
+  %tbody
+    - @notes.each do |note|
+      %tr
+        %td= note.folder.name
+        %td= note.created_at
+        %td= link_to note.created_at, note
+.float-right
+  = link_to 'Create a note', new_note_path, class: 'btn btn-dark'
