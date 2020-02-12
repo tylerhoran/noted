@@ -6,6 +6,6 @@ class ProcessorMailbox < ApplicationMailbox
   end
 
   def user
-    @user =|| User.find_by(email: mail.from)
+    @user = User.find_by(email: mail.from)
   end
 end
