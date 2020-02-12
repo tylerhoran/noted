@@ -1,3 +1,3 @@
 class ApplicationMailbox < ActionMailbox::Base
-  routing /.{1,}/i => :processor
+  routing :all => :processor
 end

@@ -1,0 +1,17 @@
+.col-lg-12
+  .card
+    .card-body.bg-light
+      - chars = []
+      - @note.text.to_s.each_char.with_index do |character, index|
+        - chars << character
+        - @note.entities[:entities].select.with_index do |val, entity_index|
+          - if val[:end_offset] == index + 1
+            - chars << "<sup id='fnref:" + entity_index.to_s + "'><a href='#fn:" + entity_index.to_s + "', rel='footnote'>" + entity_index.to_s + " </a></sup>"
+      = chars.join('').html_safe
+    .card-footer
+      %ol.list-group
+        - @note.entities[:entities].each_with_index do |entity, index|
+          %li.list-group-item{value: index, id: "fn:" + index.to_s}
+            %b= "#{entity[:type].titlecase}:"
+            = entity[:text]
+            %a{href: "#fnref:" + index.to_s, rev: "footnote"}↩

@@ -15,7 +15,7 @@ class NotesController < ApplicationController
     @note = current_user.notes.build(note_params)
     if @note.save
       ProcessEntities.perform_async(@note.id)
-      redirect_to note_path(@note)
+      redirect_to notes_path
     else
       render :new
     end
