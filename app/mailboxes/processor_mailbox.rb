@@ -2,7 +2,7 @@ class ProcessorMailbox < ApplicationMailbox
   def process
     return if user.nil?
     folder = user.folders.find_by(name: 'Inbox')
-    note = user.notes.create(text: mail.parts[0].body.decoded, folder: folder)
+    note = folder.notes.create(text: mail.parts[0].body.decoded, folder: folder)
     ProcessEntities.perform_async(note.id)
   end
 
