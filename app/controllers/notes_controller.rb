@@ -26,10 +26,16 @@ class NotesController < ApplicationController
   end
 
   def update
-    ProcessEntities.perform_async(@note.id)
+    if @note.update(note_params)
+      redirect_to root_path
+    else
+      render :edit
+    end
   end
 
   def destroy
+    @note.destroy
+    redirect_to root_path
   end
 
   private

@@ -1,0 +1,9 @@
+%h1 Edit note
+= form_for @note do |f|
+  .form-group
+    = f.select :folder_id, current_user.folders.map{|f| [f.name, f.id]}, {}, class: 'form-control'
+  .form-group
+    = f.label :text
+    = f.text_area :text, class: 'form-control'
+  .actions
+    = f.submit "Update", class: 'btn btn-dark'

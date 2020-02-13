@@ -1,23 +1,42 @@
 .float-right
   = search_form_for @q, class: 'form-inline' do |f|
-    = f.search_field :text_or_entities_cont, class: 'form-control mr-3', placeholder: 'Full Text'
-    = f.facet_for :folder_name
+    = f.search_field :text_cont, class: 'form-control mr-3', placeholder: 'Full Text'
     = f.submit "Search", class: 'btn btn-dark'
 = content_tag :table do
   = content_tag :th, "Sort by:"
   = content_tag :th, sort_link(@q, :created_at)
   = content_tag :th, sort_link(@q, :folder_name, "Folder")
-%table.table.mt-5
-  %thead
-    %tr
-      %td Folder
-      %td Created At
-      %td
-  %tbody
-    - @notes.each do |note|
-      %tr
-        %td= note.folder.name
-        %td= note.created_at
-        %td= link_to note.created_at, note
-.float-right
-  = link_to 'Create a note', new_note_path, class: 'btn btn-dark'
+.alert.alert-secondary.mt-5
+  Email
+  = mail_to "notes@trynoted.net"
+  with your notes from your user account email to have your content stored and processed
+.row
+  .col-lg-3
+    .card
+      .card-body.bg-light
+        - current_user.folders.each do |folder|
+          = link_to folder.name, { q: { folder_name_eq: folder.name } }
+          - unless folder.inbox?
+            = link_to folder, method: :delete, data: { confirm: "Are you sure you want to delete this folder and all it's notes?" } do
+              %span.text-danger &times;
+          %br
+  .col-lg-9
+    %table.table
+      %thead
+        %tr
+          %td Folder
+          %td Created At
+          %td Entities
+          %td
+      %tbody
+        - @notes.each do |note|
+          %tr
+            %td= note.folder.name
+            %td= link_to note.created_at, note
+            %td= note.entities.pluck(:text).join(', ')
+            %td
+              = link_to edit_note_path(note) do
+                &#9998;
+    .float-right
+      = link_to 'Create a note', new_note_path, class: 'btn btn-primary'
+      = link_to 'Create a folder', new_folder_path, class: 'btn btn-dark'

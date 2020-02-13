@@ -1,0 +1,7 @@
+%h1 Create a new folder
+= form_for @folder do |f|
+  .form-group
+    = f.label :text
+    = f.text_field :name, class: 'form-control'
+  .actions
+    = f.submit "Create", class: 'btn btn-dark'
